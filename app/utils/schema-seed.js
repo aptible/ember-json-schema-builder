@@ -1,6 +1,6 @@
 export default {
   "$schema":"http://json-schema.org/draft-04/schema#",
-  "id": "https://gridiron.aptible.com/schemas/software_development_lifecycle_security_controls/0.0.1",
+  "id": "software_development_lifecycle_security_controls/0.0.1",
   "type":"object",
   "title":"Software Development Lifecycle",
   "properties":{

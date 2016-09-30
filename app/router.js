@@ -6,6 +6,11 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('schemas', {}, function() {
+    this.route('schema', { path: ':schema_id'});
+  });
+  this.route("export");
+  this.route("import");
 });
 
 export default Router;
