@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col-xs-6">
+    <div class="">
+      <a class="btn btn-primary btn-sm" {{action "save"}}>Save &amp; Rerender</a>
+      <a class="btn btn-default btn-sm" {{action "exportSchema"}}>Export {{model.schema.title}}</a>
+      <a class="btn btn-danger btn-sm" {{action "destroy"}}>Destroy</a>
+    </div>
+    <hr />
+    <div class="form-group">
+      <div class="json-editor">
+        {{json-editor json=initialSchema mode="code" onChange=(action (mut currentSchema))}}
+      </div>
+    </div>
+
+    {{#if showPreview}}
+      {{json-editor json=previewJson mode="view"}}
+    {{/if}}
+  </div>
+
+  <div class="col-xs-6 preview-column">
+  {{#if schema}}
+    {{#each-property properties=schema.properties document=schemaDocument   as |key property type options|}}
+      {{#if options.showProperty}}
+
+        {{#if property.properties}}
+          {{#if property.title}}
+            <div class="section-title">{{property.title}}</div>
+          {{/if}}
+          {{#if property.description}}
+            <div class="section-description">{{property.description}}</div>
+          {{/if}}
+        {{else}}
+          <div class="property animated bounceIn">
+            <div class="property-header">
+              {{#if property.title}}
+                <div class="property-title">{{property.title}}</div>
+              {{/if}}
+              {{#if property.description}}
+                <div class="property-description">{{property.description}}</div>
+              {{/if}}
+            </div>
+
+            {{component (concat 'schema-field-' type)
+            key=key
+            property=property
+            document=schemaDocument}}
+          </div>
+        {{/if}}
+
+      {{/if}}
+    {{/each-property}}
+  {{/if}}
+  </div>
+</div>

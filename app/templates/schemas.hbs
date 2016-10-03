@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-xs-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Schemas
+      </div>
+      <ul class="list-group">
+        {{#each model as |schema|}}
+          {{link-to schema.schema.title "schemas.schema" schema.id class="list-group-item"}}
+        {{/each}}
+      </ul>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Add New Schema</div>
+      <div class="panel-body">
+        <h4>Import</h4>
+        {{file-input importData='importData'}}
+        <hr />
+        <form>
+          <h4>Create Blank</h4>
+          <div class="form-group">
+            <label>Handle</label>
+            {{input value=newSchemaHandle class="form-control"}}
+          </div>
+          <div class="form-group">
+            <label>Title</label>
+            {{input value=newSchemaTitle class="form-control"}}
+          </div>
+          <div class="form-group">
+            <button {{action "createSchema" newSchemaHandle newSchemaTitle}} class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-9">
+    {{outlet}}
+  </div>
+</div>
+
