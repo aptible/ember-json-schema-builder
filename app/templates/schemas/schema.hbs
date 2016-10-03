@@ -24,13 +24,21 @@
 
         {{#if property.properties}}
           {{#if property.title}}
-            <h4 class="section-title">{{property.title}}</h4>
+            <div class="section-title">{{property.title}}</div>
+          {{/if}}
+          {{#if property.description}}
+            <div class="section-description">{{property.description}}</div>
           {{/if}}
         {{else}}
           <div class="property animated bounceIn">
-            {{#if property.title}}
-              <label class="property-title">{{property.title}}</label>
-            {{/if}}
+            <div class="property-header">
+              {{#if property.title}}
+                <div class="property-title">{{property.title}}</div>
+              {{/if}}
+              {{#if property.description}}
+                <div class="property-description">{{property.description}}</div>
+              {{/if}}
+            </div>
 
             {{component (concat 'schema-field-' type)
             key=key
