@@ -1,11 +1,8 @@
 import Ember from 'ember';
-import { storageFor } from 'ember-local-storage';
 
 export default Ember.Route.extend({
-  schemaLibrary: storageFor('schemaLibrary'),
-
   model() {
-    return this.get('schemaLibrary');
+    return this.store.find('schema');
   },
 
   actions: {
@@ -23,8 +20,9 @@ export default Ember.Route.extend({
         }
       };
 
-      this.get('schemaLibrary').addObject(schema);
-
+      this.store.createRecord('schema', { schema }).save().then((schema) => {
+        this.transitionTo('schemas.schema', schema);
+      })
       this.controller.set('newSchemaHandle', '');
       this.controller.set('newSchemaTitle', '');
     }

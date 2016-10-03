@@ -2,6 +2,7 @@
 
 module.exports = function(environment) {
   var ENV = {
+    'ember-local-storage': { fileExport: true },
     modulePrefix: 'schema-builder',
     environment: environment,
     baseURL: '/',

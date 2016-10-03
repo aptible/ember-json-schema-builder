@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import { storageFor } from 'ember-local-storage';
 
 export default Ember.Route.extend({
   model(params) {
@@ -8,8 +7,9 @@ export default Ember.Route.extend({
   },
 
   setupController(controller, model) {
-    controller.set('initialSchema', model);
-    controller.set('persistedSchema', model);
+    controller.set('initialSchema', model.get('schema'));
+    controller.set('currentSchema', model.get('schema'));
+    controller.set('model', model);
     controller.renderProperties();
   }
 });

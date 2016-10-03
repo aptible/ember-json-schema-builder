@@ -1,1 +1,1 @@
-export { default } from 'ember-local-storage/serializers/local';
+export { default } from 'ember-local-storage/serializers/serializer';
