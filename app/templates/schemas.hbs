@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-xs-3 schema-index">
+  <div class="col-xs-2 schema-index">
     <div class="panel panel-default">
       <div class="panel-heading">
         Schemas
@@ -18,12 +18,14 @@
       </div>
     </div>
 
-    <div class="panel panel-default">
-      <div class="panel-heading">Export Schemas</div>
-      <div class="panel-body">
-        <button {{action "exportAllSchemas"}} class="btn btn-default">Export</button>
+    {{#if model.length}}
+      <div class="panel panel-default">
+        <div class="panel-heading">Export Schemas</div>
+        <div class="panel-body">
+          <button {{action "exportAllSchemas"}} class="btn btn-default">Export {{model.length}} Schemas</button>
+        </div>
       </div>
-    </div>
+    {{/if}}
 
     <div class="panel panel-default">
       <div class="panel-heading">Create Schema</div>
@@ -44,7 +46,7 @@
       </div>
     </div>
   </div>
-  <div class="col-xs-9 schema-show">
+  <div class="col-xs-10 schema-show">
     {{outlet}}
   </div>
 </div>
