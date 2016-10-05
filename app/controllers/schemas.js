@@ -1,33 +1,35 @@
 import Ember from 'ember';
-
-function readFile(file) {
-  const reader = new FileReader();
-
-  return new Ember.RSVP.Promise((resolve) => {
-    reader.onload = function(event) {
-      resolve({
-        file: file.name,
-        type: file.type,
-        data: event.target.result,
-        size: file.size
-      });
-    };
-
-    reader.readAsText(file);
-  });
-}
+import { readFile } from 'schema-builder/utils/read-file';
 
 export default Ember.Controller.extend({
   actions: {
-    importData(event) {
-      readFile(event.target.files[0])
-        .then((file) => {
-          let schemaData = JSON.parse(file.data);
+    exportAllSchemas() {
+      let message = `You are about to download all ${this.get('model.length')}` +
+                    ' schemas. Chrome will ask you to "Allow" before downloading.';
 
-          this.store.createRecord('schema', { schema: schemaData }).save().then((schema) => {
-            this.transitionTo('schemas.schema', schema);
-          })
+      if(confirm(message)) {
+        this.get('model').forEach(schema => schema.export());
+      }
+    },
+
+    importData(event) {
+      let { files } = event.target;
+      let promises = [];
+      // event.target.files is a FileList, not an array :(
+
+      for(let i = 0; i < files.length; i++) {
+        let file = files[i];
+        readFile(file).then((file) => {
+          let schemaData = JSON.parse(file.data);
+          let schema = this.store.createRecord('schema', { schema: schemaData });
+
+          promises.push(schema.save());
         });
+      }
+
+      Ember.RSVP.all(promises).then(() => {
+        this.get('flashMessages').success(`${promises.length} schemas imported!`);
+      });
     }
   }
 });

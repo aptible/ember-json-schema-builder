@@ -9,8 +9,9 @@ const {
 
 export default Component.extend({
   tagName: 'input',
-  attributeBindings: ['type'],
+  attributeBindings: ['type', 'multiple'],
   type: 'file',
+  multiple: true,
 
   didInsertElement() {
     this.$().on('change', bind(this, 'filesSelected'));
