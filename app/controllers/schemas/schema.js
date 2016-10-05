@@ -32,12 +32,7 @@ export default Ember.Controller.extend({
     },
 
     exportSchema() {
-      this.save().then((model) => {
-        let filename = model.get('fileName');
-        let content = JSON.stringify(model.get('schema'));
-        window.saveAs(new Blob([content],
-                               {type: 'application/json;charset=utf-8'}), filename);
-      })
+      this.save().then(model => model.export());
     },
 
     destroy() {
