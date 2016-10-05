@@ -4,7 +4,12 @@ import { readFile } from 'schema-builder/utils/read-file';
 export default Ember.Controller.extend({
   actions: {
     exportAllSchemas() {
-      this.get('model').forEach(schema => schema.export());
+      let message = `You are about to download all ${this.get('model.length')}` +
+                    ' schemas. Chrome will ask you to "Allow" before downloading.';
+
+      if(confirm(message)) {
+        this.get('model').forEach(schema => schema.export());
+      }
     },
 
     importData(event) {
