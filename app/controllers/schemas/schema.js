@@ -3,6 +3,8 @@ import Schema from 'ember-json-schema-document/models/schema';
 import { storageFor } from 'ember-local-storage';
 
 export default Ember.Controller.extend({
+  currentTab: 'output',
+
   schemaLibrary: storageFor('schemaLibrary'),
   initialSchema: null,    // Set in setupController, used to seed jsonEditor
   currentSchema: null,    // Schema bound to jsonEditor
@@ -26,13 +28,33 @@ export default Ember.Controller.extend({
     return this.get('model').save();
   },
 
+  expand() {
+    let editor = document.querySelector('.jsoneditor');
+    let expandFuncs = ['requestFullscreen', 'webkitRequestFullscreen',
+                       'mozRequestFullScreen', 'msRequestFullscreen'];
+
+    expandFuncs.forEach((func) => {
+      if(typeof editor[func] === 'function') {
+        editor[func]();
+      }
+    });
+  },
+
+  exportSchema() {
+    this.save().then(model => model.export());
+  },
+
   actions: {
     save() {
       this.save();
     },
 
+    expand() {
+      this.expand();
+    },
+
     exportSchema() {
-      this.save().then(model => model.export());
+      this.exportSchema();
     },
 
     destroy() {
@@ -49,6 +71,16 @@ export default Ember.Controller.extend({
     hidePreview() {
       this.set('previewJson', {});
       this.set('showPreview', false);
+    },
+
+    showOutput() {
+      this.set('currentTab', 'output');
+    },
+
+    showDocument() {
+      let documentJSON = this.get('schemaDocument').dump();
+      this.set('documentJSON', documentJSON);
+      this.set('currentTab', 'document');
     }
   }
 });
