@@ -58,6 +58,12 @@ export default Ember.Controller.extend({
     },
 
     destroy() {
+      let message = `Are you sure?`;
+
+      if(!confirm(message)) {
+        return;
+      }
+
       this.get('model').destroyRecord().then(() => {
         this.transitionTo('schemas');
       });
