@@ -1,9 +1,11 @@
 <div class="row">
   <div class="col-xs-7">
     <div class="">
-      <a class="btn btn-primary btn-sm" {{action "save"}}>Save &amp; Rerender</a>
-      <a class="btn btn-default btn-sm" {{action "exportSchema"}}>Export {{model.schema.title}}</a>
-      <a class="btn btn-danger btn-sm" {{action "destroy"}}>Destroy</a>
+      <a class="btn btn-danger btn-xs pull-right" {{action "destroy"}}>Destroy</a>
+
+      <a class="btn btn-primary btn-sm" {{action "save"}}>Save (Ctrl+S)</a>
+      <a class="btn btn-default btn-sm" {{action "exportSchema"}}>Export (Ctrl+E)</a>
+      <a class="btn btn-default btn-sm" {{action "expand"}}>Full Screen (Ctrl+F)</a>
     </div>
     <hr />
     <div class="form-group">
@@ -18,37 +20,50 @@
   </div>
 
   <div class="col-xs-5 preview-column">
-  {{#if schema}}
-    {{#each-property properties=schema.properties document=schemaDocument   as |key property type options|}}
-      {{#if options.showProperty}}
+    <div class="btn-group">
+      <a class="btn btn-default btn-sm {{if (eq currentTab 'output') 'active' ''}}" {{action "showOutput"}}>Form</a>
+      <a class="btn btn-default btn-sm {{if (eq currentTab 'document') 'active' '' }}" {{action "showDocument"}}>Document Preview</a>
+    </div>
 
-        {{#if property.properties}}
-          {{#if property.title}}
-            <div class="section-title">{{property.title}}</div>
-          {{/if}}
-          {{#if property.description}}
-            <div class="section-description">{{property.description}}</div>
-          {{/if}}
-        {{else}}
-          <div class="property animated bounceIn">
-            <div class="property-header">
+    <hr />
+
+    {{#if (eq currentTab 'output')}}
+      {{#if schema}}
+        {{#each-property properties=schema.properties document=schemaDocument   as |key property type options|}}
+          {{#if options.showProperty}}
+
+            {{#if property.properties}}
               {{#if property.title}}
-                <div class="property-title">{{property.title}}</div>
+                <div class="section-title">{{property.title}}</div>
               {{/if}}
               {{#if property.description}}
-                <div class="property-description">{{property.description}}</div>
+                <div class="section-description">{{property.description}}</div>
               {{/if}}
-            </div>
+            {{else}}
+              <div class="property animated bounceIn">
+                <div class="property-header">
+                  {{#if property.title}}
+                    <div class="property-title">{{property.title}}</div>
+                  {{/if}}
+                  {{#if property.description}}
+                    <div class="property-description">{{property.description}}</div>
+                  {{/if}}
+                </div>
 
-            {{component (concat 'schema-field-' type)
-            key=key
-            property=property
-            document=schemaDocument}}
-          </div>
-        {{/if}}
+                {{component (concat 'schema-field-' type)
+                key=key
+                property=property
+                document=schemaDocument}}
+              </div>
+            {{/if}}
 
+          {{/if}}
+        {{/each-property}}
       {{/if}}
-    {{/each-property}}
-  {{/if}}
+    {{else}}
+      <div class="json-editor">
+        {{json-editor json=documentJSON mode="view"}}
+      </div>
+    {{/if}}
   </div>
 </div>

@@ -17,10 +17,20 @@ export default Ember.Route.extend(KeyboardShortcuts, {
   actions: {
     save() {
       this.controller.save();
+    },
+
+    exportSchema() {
+      this.controller.exportSchema();
+    },
+
+    expand() {
+      this.controller.expand();
     }
   },
 
   keyboardShortcuts: {
-    'ctrl+s' : { action: 'save' }
+    'ctrl+s' : { action: 'save' },
+    'ctrl+e' : { action: 'exportSchema' },
+    'ctrl+f' : { action: 'expand' }
   }
 });
