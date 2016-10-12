@@ -7,6 +7,7 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('schemas', {}, function() {
+    this.route('json_graph');
     this.route('schema', { path: ':schema_id'});
   });
 });

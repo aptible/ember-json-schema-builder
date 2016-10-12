@@ -60,7 +60,8 @@
           {{/if}}
         {{/each-property}}
       {{/if}}
-    {{else}}
+    {{/if}}
+    {{#if (eq currentTab 'document')}}
       <div class="json-editor">
         {{json-editor json=documentJSON mode="view"}}
       </div>
