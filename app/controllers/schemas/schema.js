@@ -1,11 +1,9 @@
 import Ember from 'ember';
 import Schema from 'ember-json-schema-document/models/schema';
-import { storageFor } from 'ember-local-storage';
 
 export default Ember.Controller.extend({
   currentTab: 'output',
 
-  schemaLibrary: storageFor('schemaLibrary'),
   initialSchema: null,    // Set in setupController, used to seed jsonEditor
   currentSchema: null,    // Schema bound to jsonEditor
   jsonDocument: { security_controls: {} },     // Default json document seed
@@ -14,10 +12,6 @@ export default Ember.Controller.extend({
   renderProperties() {
     let schema = new Schema(this.get('model.schema'));
     let schemaDocument = schema.buildDocument();
-
-    // if(this.get('jsonDocument')) {
-    //   schemaDocument.load(this.get('jsonDocument') || {});
-    // }
 
     this.setProperties({ schema, schemaDocument });
   },
