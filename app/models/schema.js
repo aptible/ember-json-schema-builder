@@ -10,7 +10,7 @@ export default DS.Model.extend({
 
   export() {
     let filename = this.get('fileName');
-    let content = JSON.stringify(this.get('schema'));
+    let content = JSON.stringify(this.get('schema'), null, 2);
 
     window.saveAs(new Blob([content], { type: FILE_TYPE }), filename);
   }
