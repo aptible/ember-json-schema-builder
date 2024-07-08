@@ -1,0 +1,32 @@
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "0.10"
+
+      - name: Setup
+        run: |
+          npm install -g bower
+          npm install
+          bower install
+
+      - name: Test
+        run: |
+          echo "These tests do not work at present due to outdated code" \
+               "maybe try to fix them if you need to make changes in this repo?"
+          npm test
